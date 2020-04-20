@@ -1,3 +1,3 @@
 # rust-results-demo
 
-A simple demo on how to use Rust's Result and Error chaining.
+A simple demo about Rust's Result and Error chaining.
