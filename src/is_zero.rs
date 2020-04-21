@@ -21,15 +21,6 @@ pub fn is_zero(i: i32) -> Result<bool> {
     Ok(true)
 }
 
-pub fn is_zero2(
-    i: i32,
-) -> std::result::Result<bool, Box<dyn std::error::Error>> {
-    is_non_negative(i)?;
-    is_non_positive(i)?;
-
-    Ok(true)
-}
-
 #[cfg(test)]
 mod tests {
     mod is_zero_tests {

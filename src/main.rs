@@ -1,5 +1,4 @@
 use crate::is_zero::is_zero;
-use crate::is_zero::is_zero2;
 
 mod error;
 mod is_zero;
@@ -35,6 +34,8 @@ fn create_file_name(
     Ok(format!("{}.{}", base_name, extension))
 }
 
+// demonstrates mixing of result/error types via trait inheritance
+// downside: it is not easy to distinguish error types
 fn check_file_and_zero(
     file_name: &str,
     number: i32,
@@ -44,6 +45,7 @@ fn check_file_and_zero(
     Ok(true)
 }
 
+// demonstrates mixing of result/error types via defined From implementation
 fn check_file_and_zero2(
     file_name: &str,
     number: i32,
@@ -53,6 +55,8 @@ fn check_file_and_zero2(
     Ok(true)
 }
 
+// demonstrates mixing of result/error types via defined From implementation
+// with a more complex call hierarchy
 fn check_file_and_zero3(
     base_name: &str,
     extension: &str,
@@ -64,6 +68,7 @@ fn check_file_and_zero3(
     Ok(true)
 }
 
+// demonstrates result matching
 fn convert_check(base_name: &str, extension: &str, number: i32) -> String {
     let check_result = check_file_and_zero3(base_name, extension, number);
 
@@ -86,24 +91,22 @@ fn convert_check(base_name: &str, extension: &str, number: i32) -> String {
 }
 
 fn main() {
-    println!("Hello, world!");
-
+    println!("\n### is_zero");
     println!("{:?}", is_zero(0));
     println!("{:?}", is_zero(-50));
     println!("{:?}", is_zero(6));
 
-    println!("{:?}", is_zero2(0));
-    println!("{:?}", is_zero2(-50));
-    println!("{:?}", is_zero2(6));
-
+    println!("\n### check_file_and_zero");
     println!("{:?}", check_file_and_zero("testfile.txt", 0));
     println!("{:?}", check_file_and_zero("nonsense.txt", 0));
     println!("{:?}", check_file_and_zero("testfile.txt", 1));
 
+    println!("\n### check_file_and_zero2");
     println!("{:?}", check_file_and_zero2("testfile.txt", 0));
     println!("{:?}", check_file_and_zero2("nonsense.txt", 0));
     println!("{:?}", check_file_and_zero2("testfile.txt", 1));
 
+    println!("\n### check_file_and_zero3");
     println!("{:?}", check_file_and_zero3("testfile", "txt", 0));
     println!("{:?}", check_file_and_zero3("testfil", "txt", 0));
     println!("{:?}", check_file_and_zero3("testfile1", "txt", 0));
@@ -111,6 +114,7 @@ fn main() {
     println!("{:?}", check_file_and_zero3("testfile", "txt", 2));
     println!("{:?}", check_file_and_zero3("testfile", "txt", -1));
 
+    println!("\n### convert_check");
     println!("{:?}", convert_check("testfile", "txt", 0));
     println!("{:?}", convert_check("testfil", "txt", 0));
     println!("{:?}", convert_check("testfile1", "txt", 0));
